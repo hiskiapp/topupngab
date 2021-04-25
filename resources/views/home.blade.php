@@ -2,7 +2,7 @@
 @extends('layouts.default')
 
 {{-- Title Page --}}
-@section('title', 'Untitled')
+@section('title', 'Home')
 
 {{-- Styles Section --}}
 @section('styles')

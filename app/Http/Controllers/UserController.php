@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\UserRequest;
+use App\Models\User;
 
 class UserController extends Controller
 {
@@ -13,7 +14,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        //
+        return view('users.index');
     }
 
     /**
@@ -23,7 +24,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        //w
+        return view('users.create');
     }
 
     /**
@@ -34,7 +35,12 @@ class UserController extends Controller
      */
     public function store(UserRequest $request)
     {
-        //
+        User::create($request->validated());
+
+        return redirect()->route('users.index')->with([
+            'status' => 'success',
+            'message' => 'Admin berhasil disimpan!'
+        ]);
     }
 
     /**
@@ -45,7 +51,9 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        //
+        $user = User::findOrFail($id);
+
+        return view('users.show', compact('user'));
     }
 
     /**
@@ -56,7 +64,9 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        //
+        $user = User::findOrFail($id);
+
+        return view('users.edit', compact('user'));
     }
 
     /**
@@ -68,7 +78,18 @@ class UserController extends Controller
      */
     public function update(UserRequest $request, $id)
     {
-        //
+        $user = User::findOrFail($id);
+
+        $user->update([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => is_null($request->password) ? $user->password : $request->password
+        ]);
+
+        return redirect()->route('users.index')->with([
+            'status' => 'success',
+            'message' => 'Admin berhasil diperbarui!'
+        ]);
     }
 
     /**
@@ -79,6 +100,8 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        //
+        User::findOrFail($id)->delete();
+
+        return response()->json(true);
     }
 }

@@ -13,7 +13,7 @@ class ScheduleRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return auth()->check();
     }
 
     /**
@@ -24,7 +24,10 @@ class ScheduleRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'message' => 'required',
+            'media' => 'required',
+            'sent_at' => 'required',
+            'status' => 'required',
         ];
     }
 }

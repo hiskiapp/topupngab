@@ -17,8 +17,8 @@ class CreateGamesTable extends Migration
             $table->uuid('id')->primary();
             $table->string('code')->unique();
             $table->string('name');
-            $table->string('item');
-            $table->json('data');
+            $table->string('unit');
+            $table->json('items');
             $table->timestamps();
             $table->softDeletes();
         });

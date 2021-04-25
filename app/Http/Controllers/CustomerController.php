@@ -13,7 +13,7 @@ class CustomerController extends Controller
      */
     public function index()
     {
-        //
+        return view('customers.index');
     }
 
     /**
@@ -24,6 +24,8 @@ class CustomerController extends Controller
      */
     public function show($id)
     {
-        //
+        $customer = Customer::findOrFail($id);
+
+        return view('customers.show', compact('customer'));
     }
 }

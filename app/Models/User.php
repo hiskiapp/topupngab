@@ -56,4 +56,4 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return ucwords(substr($this->name, 0, 1));
     }
-}
+}  

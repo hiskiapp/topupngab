@@ -98,7 +98,7 @@ Password: 123456
 - [x] Initializing Template
 - [x] Migration
 - [x] Auth
-- [ ] Master Data
+- [x] Master Data
 - [ ] Bot
 - [ ] Broadcast, Schedullar
 - [ ] Transaction

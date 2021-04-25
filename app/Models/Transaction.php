@@ -20,7 +20,9 @@ class Transaction extends Model
     protected $fillable = [
         'code',
         'customer_id',
-        'item_id',
+        'game_id',
+        'item',
+        'price',
         'payment_id',
         'user_id',
         'status'
@@ -40,9 +42,9 @@ class Transaction extends Model
         $this->belongsTo(Customer::class);
     }
     
-    public function item()
+    public function game()
     {
-        $this->belongsTo(Item::class);
+        $this->belongsTo(Game::class);
     }
 
     public function payment()

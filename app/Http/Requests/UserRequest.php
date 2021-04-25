@@ -13,7 +13,7 @@ class UserRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return auth()->check();
     }
 
     /**
@@ -23,8 +23,27 @@ class UserRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            //
-        ];
+        switch ($this->method()) {
+            case 'GET':
+            case 'DELETE':
+                return [];
+            case 'POST':
+                return [
+                    'name' => 'required|min:3|max:255',
+                    'email' => 'required|unique:users|min:5|max:255',
+                    'number' => ['required', 'regex:/^(^\+62|62|^08)(\d{3,4}-?){2}\d{3,4}$/', 'unique:users,number'],
+                    'password' => 'required|min:6|max:255',
+                ];
+            case 'PUT':
+            case 'PATCH':
+                return [
+                    'name' => 'required|min:3|max:255',
+                    'email' => 'required|min:5|max:255|unique:users,email,' . $this->user,
+                    'number' => ['required', 'regex:/^(^\+62|62|^08)(\d{3,4}-?){2}\d{3,4}$/', 'unique:users,number,' . $this->user],
+                    'password' => 'nullable|min:6|max:255',
+                ];
+            default:
+                break;
+        }
     }
 }

@@ -18,8 +18,8 @@ class CreatePaymentsTable extends Migration
             $table->foreignUuid('transaction_id');
             $table->string('payment');
             $table->string('reference')->unique();
-            $table->integer('amount')->nullable();
-            $table->integer('amount_received');
+            $table->unsignedInteger('amount')->nullable();
+            $table->unsignedInteger('amount_received');
             $table->tinyInteger('approval_status')->default(0);
             $table->timestamp('approval_at')->nullable();
             $table->timestamps();

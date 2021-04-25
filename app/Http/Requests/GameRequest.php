@@ -13,7 +13,7 @@ class GameRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return auth()->check();
     }
 
     /**
@@ -23,8 +23,29 @@ class GameRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            //
-        ];
+        switch ($this->method()) {
+            case 'GET':
+            case 'DELETE':
+                return [];
+            case 'POST':
+                return [
+                    'code' => 'required|unique:games,code',
+                    'name' => 'required',
+                    'unit' => 'required',
+                    'items.*.amount' => 'required|numeric',
+                    'items.*.price' => 'required|numeric',
+                ];
+            case 'PUT':
+            case 'PATCH':
+                return [
+                    'code' => 'required|unique:games,code,'.$this->game,
+                    'name' => 'required',
+                    'unit' => 'required',
+                    'items.*.amount' => 'required|numeric',
+                    'items.*.price' => 'required|numeric',
+                ];
+            default:
+                break;
+        }
     }
 }

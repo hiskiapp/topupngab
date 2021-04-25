@@ -30,7 +30,10 @@ Route::group(['middleware' => 'auth', 'verified'], function() {
 	
 	Route::get('/', 'HomeController@index')->name('home');
 
-	Route::resource('bot', 'BotController')->only(['index']);
+	Route::group(['prefix' => 'bot', 'as' => 'bot.'], function() {
+		Route::get('/', 'BotController@index')->name('index');
+		Route::patch('token', 'BotController@token')->name('token');
+	});
 
 	Route::group(['prefix' => 'transactions', 'as' => 'transactions.'], function() {
 		Route::get('/', 'TransactionController@index')->name('index');
@@ -46,24 +49,9 @@ Route::group(['middleware' => 'auth', 'verified'], function() {
 
 	Route::resource('games', 'GameController');
 
-	Route::group(['as' => 'items.'], function() {
-		Route::group(['prefix' => 'games/{game}/items',], function() {
-			Route::get('/', 'ItemController@index')->name('index');
-			Route::get('create', 'ItemController@create')->name('create');
-			Route::post('store', 'ItemController@store')->name('store');
-		});
-
-		Route::group(['prefix' => 'items',], function() {
-			Route::get('{id}', 'ItemController@show')->name('show');
-			Route::get('{id}/edit', 'ItemController@edit')->name('edit');
-			Route::patch('{id}', 'ItemController@update')->name('update');
-			Route::delete('{id}', 'ItemController@destroy')->name('destroy');
-		});
-	});
-
 	Route::resource('broadcast', 'BroadcastController')->only(['index', 'store']);
 
 	Route::resource('schedules', 'ScheduleController')->except(['show']);
 
-	Route::resource('settings', 'SettingController')->only(['index', 'edit', 'update']);
+	Route::resource('settings', 'SettingController')->only(['index', 'update']);
 });

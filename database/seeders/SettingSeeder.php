@@ -15,7 +15,7 @@ class SettingSeeder extends Seeder
      */
     public function run()
     {
-        Setting::create(['slug' => 'title', 'name' => 'Title', 'text' => 'Top Up Ngab']);
-        Setting::create(['slug' => 'token', 'name' => 'Token API', 'text' => Str::random(60)]);
+        Setting::create(['slug' => 'title', 'name' => 'Title', 'value' => 'Top Up Ngab']);
+        Setting::create(['slug' => 'token', 'name' => 'Token API', 'value' => Str::random(60)]);
     }
 }

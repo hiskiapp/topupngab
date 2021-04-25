@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Requests\TransactionRequest;
+use App\Models\Transaction;
 
 class TransactionController extends Controller
 {
@@ -14,7 +15,7 @@ class TransactionController extends Controller
      */
     public function index()
     {
-        //
+        return view('transactions.index');
     }
 
     /**
@@ -25,7 +26,9 @@ class TransactionController extends Controller
      */
     public function show($id)
     {
-        //
+        $transaction = Transaction::findOrFail($id);
+
+        return view('transactions.show', compact('transaction'));
     }
 
     /**
@@ -37,6 +40,8 @@ class TransactionController extends Controller
      */
     public function approval(TransactionRequest $request, $id)
     {
+        Transaction::findOrFail($id)->update(['status' => $request->status]);
 
+        return response()->json(true);
     }   
 }

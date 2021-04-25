@@ -21,8 +21,8 @@ class Game extends Model
     protected $fillable = [
         'code',
         'name',
-        'item',
-        'data'
+        'unit',
+        'items'
     ];
 
     /**
@@ -33,9 +33,4 @@ class Game extends Model
     protected $casts = [
         'id' => 'string',
     ];
-
-    public function items()
-    {
-        $this->hasMany(Item::class);
-    }
 }

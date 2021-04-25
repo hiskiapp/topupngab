@@ -17,7 +17,9 @@ class CreateTransactionsTable extends Migration
             $table->uuid('id')->primary();
             $table->string('code')->unique();
             $table->foreignUuid('customer_id');
-            $table->foreignUuid('item_id')->nullable();
+            $table->foreignUuid('game_id')->nullable();
+            $table->unsignedInteger('item')->nullable();
+            $table->unsignedInteger('price')->nullable();
             $table->text('data')->nullable();
             $table->foreignUuId('payment_id')->nullable();
             $table->tinyInteger('status')->default(0);

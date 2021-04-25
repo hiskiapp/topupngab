@@ -32,4 +32,9 @@ class Customer extends Model
     protected $casts = [ 
         'id' => 'string',
     ];
+
+    public function transactions()
+    {
+        return $this->hasMany(Transaction::class);
+    }
 }

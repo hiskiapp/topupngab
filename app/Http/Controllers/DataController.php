@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Customer;
 use App\Models\Game;
 use App\Models\Item;
 use App\Models\Schedule;
@@ -14,7 +15,7 @@ class DataController extends Controller
 {
     public function customers()
     {
-        $customers = User::select('name', 'number', 'is_business', 'created_at', 'id')->get();
+        $customers = Customer::withCount('transactions')->get();
 
         return DataTables::of($customers)
         ->editColumn('created_at', function ($customer) {
@@ -26,22 +27,11 @@ class DataController extends Controller
 
     public function games()
     {
-        $games = Game::withCount('items')->select('code', 'name', 'item', 'updated_at', 'id')->get();
+        $games = Game::select('code', 'name', 'unit', 'updated_at', 'id')->get();
 
         return DataTables::of($games)
-        ->addIndexColumn()
-        ->make();
-    }
-
-    public function items($game)
-    {
-        $items = Item::whereGameId($game)
-        ->orderBy('amount', 'asc')
-        ->get();
-
-        return DataTables::of($items)
-        ->editColumn('updated_at', function ($item) {
-            return $item->updated_at ? with(new Carbon($item->updated_at))->format('d F Y H:i') : '';
+        ->editColumn('updated_at', function ($game) {
+            return $game->updated_at ? with(new Carbon($game->updated_at))->format('d F Y H:i') : '';
         })
         ->addIndexColumn()
         ->make();
@@ -64,7 +54,7 @@ class DataController extends Controller
         $settings = Setting::select('slug', 'name', 'value', 'updated_at', 'id')->get();
 
         return DataTables::of($settings)
-        ->editColumn('sent_at', function ($setting) {
+        ->editColumn('updated_at', function ($setting) {
             return $setting->updated_at ? with(new Carbon($setting->updated_at))->format('d F Y H:i') : '';
         })
         ->addIndexColumn()
@@ -78,9 +68,12 @@ class DataController extends Controller
 
     public function users()
     {
-        $users = User::select('name', 'email', 'number', 'id')->get();
+        $users = User::select('name', 'email', 'number', 'updated_at', 'id')->get();
 
         return DataTables::of($users)
+        ->editColumn('updated_at', function ($user) {
+            return $user->updated_at ? with(new Carbon($user->updated_at))->format('d F Y H:i') : '';
+        })
         ->addIndexColumn()
         ->make();
     }

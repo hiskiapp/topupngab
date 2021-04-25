@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\GameRequest;
+use App\Models\Game;
 
 class GameController extends Controller
 {
@@ -13,7 +14,7 @@ class GameController extends Controller
      */
     public function index()
     {
-        //
+        return view('games.index');
     }
 
     /**
@@ -23,7 +24,7 @@ class GameController extends Controller
      */
     public function create()
     {
-        //
+        return view('games.create');
     }
 
     /**
@@ -34,7 +35,17 @@ class GameController extends Controller
      */
     public function store(GameRequest $request)
     {
-        //
+        Game::create([
+            'code' => $request->code,
+            'name' => $request->name,
+            'unit' => $request->unit,
+            'items' => json_encode($request->items)
+        ]);
+
+        return redirect()->route('games.index')->with([
+            'status' => 'success',
+            'message' => 'Game berhasil disimpan!'
+        ]);
     }
 
     /**
@@ -45,7 +56,9 @@ class GameController extends Controller
      */
     public function show($id)
     {
-        //
+        $game = Game::findOrFail($id);
+
+        return view('games.show', compact('game'));
     }
 
     /**
@@ -56,7 +69,9 @@ class GameController extends Controller
      */
     public function edit($id)
     {
-        //
+        $game = Game::findOrFail($id);
+
+        return view('games.edit', compact('game'));
     }
 
     /**
@@ -68,7 +83,17 @@ class GameController extends Controller
      */
     public function update(GameRequest $request, $id)
     {
-        //
+        Game::findOrFail($id)->update([
+            'code' => $request->code,
+            'name' => $request->name,
+            'unit' => $request->unit,
+            'items' => json_encode($request->items)
+        ]);
+
+        return redirect()->route('games.index')->with([
+            'status' => 'success',
+            'message' => 'Game berhasil diperbarui!'
+        ]);
     }
 
     /**
@@ -79,6 +104,8 @@ class GameController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Game::findOrFail($id)->delete();
+
+        return response()->json(true);
     }
 }

@@ -13,7 +13,7 @@ class TransactionRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return auth()->check();
     }
 
     /**
@@ -24,7 +24,7 @@ class TransactionRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'status' => 'required'
         ];
     }
 }

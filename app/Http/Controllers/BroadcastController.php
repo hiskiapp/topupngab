@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\BroadcastRequest;
+use App\Jobs\WhatsappBroadcast;
+use App\Models\Broadcast;
+use Facades\Services\FileService;
 
 class BroadcastController extends Controller
 {
@@ -24,6 +27,21 @@ class BroadcastController extends Controller
      */
     public function store(BroadcastRequest $request)
     {
-        //
+        $file = $request->hasFile('file') ? FileService::upload($request->file) : null;
+
+        $data = [
+            'message' => $request->message,
+            'file' => $file,
+            'file_name' => $request->file_name,
+        ];
+
+        Broadcast::create($data);
+
+        dispatch(new WhatsappBroadcast($data));
+
+        return redirect()->route('broadcast.index')->with([
+            'type' => 'success',
+            'message' => 'Broadcast Sedang Diproses!'
+        ]);
     }
 }

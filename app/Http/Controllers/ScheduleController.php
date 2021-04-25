@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ScheduleRequest;
+use App\Models\Schedule;
 
 class ScheduleController extends Controller
 {
@@ -13,7 +14,7 @@ class ScheduleController extends Controller
      */
     public function index()
     {
-        //
+        return view('schedules.index');
     }
 
     /**
@@ -23,7 +24,7 @@ class ScheduleController extends Controller
      */
     public function create()
     {
-        //
+        return view('schedules.create');
     }
 
     /**
@@ -45,7 +46,9 @@ class ScheduleController extends Controller
      */
     public function edit($id)
     {
-        //
+        $schedule = Schedule::findOrFail($id);
+
+        return view('schedules.edit', compact('schedule'));
     }
 
     /**
@@ -68,6 +71,8 @@ class ScheduleController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Schedule::findOrFail($id)->delete($id);
+
+        return response()->json(true);
     }
 }

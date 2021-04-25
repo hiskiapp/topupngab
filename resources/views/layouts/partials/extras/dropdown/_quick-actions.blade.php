@@ -4,14 +4,14 @@
         <h4 class="text-dark font-weight-bold">
             Quick Actions
         </h4>
-        <span class="btn btn-success btn-sm font-weight-bold font-size-sm mt-2">23 transaksi menunggu</span>
+        <span class="btn btn-success btn-sm font-weight-bold font-size-sm mt-2">{{ topup_waiting() }} transaksi menunggu</span>
     </div>
 @else
     <div class="d-flex flex-column flex-center py-10 bgi-size-cover bgi-no-repeat rounded-top" style="background-image: url('{{ asset('media/misc/bg-1.jpg') }}')">
         <h4 class="text-white font-weight-bold">
             Quick Actions
         </h4>
-        <span class="btn btn-success btn-sm font-weight-bold font-size-sm mt-2">23 transaksi menunggu</span>
+        <span class="btn btn-success btn-sm font-weight-bold font-size-sm mt-2">{{ topup_waiting() }} transaksi menunggu</span>
     </div>
 @endif
 
