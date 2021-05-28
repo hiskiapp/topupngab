@@ -8,17 +8,17 @@ use Illuminate\Support\Facades\Http;
 
 class WhatsappService
 {
-    public function http($slug, $data = [])
+    public function http(string $slug, array $data = [])
     {
         $response = Http::asForm()
-        ->withOptions(['base_uri' => setting('api'), 'debug' => false])
+        ->withOptions(['base_uri' => config('services.whatsapp.url'), 'debug' => false])
         ->post($slug, $data)
         ->json();
 
         return $response;
     }
 
-    public function message($data)
+    public function message(array $data)
     {
         return $this->http('send-message', [
             'token' => setting('token'),
@@ -27,29 +27,27 @@ class WhatsappService
         ]);
     }
 
-    public function media($data)
+    public function media(array $data)
     {
         return $this->http('send-media', [
             'token' => setting('token'),
             'number' => $data['number'],
-            'file' => $data['file'],
-            'file_name' => $data['file_name'],
+            'media' => $data['media'],
             'caption' => $data['caption'],
         ]);
     }
 
-    public function broadcast($message, $file = null, $filename = null)
+    public function broadcast(string $message, $media = null)
     {
         $customers = Customer::whereIsSubscribe(1)->get();
 
-        if ($file) {
+        if ($media) {
             foreach ($customers as $customer) {
                 $this->media([
                     'token' => setting('token'),
                     'number' => $customer->number,
                     'caption' => $message,
-                    'file' => asset(Storage::url($file)),
-                    'file_name' => $filename
+                    'media' => asset(Storage::url($media)),
                 ]);
             }
         }else{

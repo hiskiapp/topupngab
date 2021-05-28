@@ -75,7 +75,7 @@
                     data: 'number'
                 },
                 {
-                    data: 'tramsactions_count'
+                    data: 'transactions_count'
                 },
                 {
                     data: 'created_at'

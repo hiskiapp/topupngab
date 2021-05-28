@@ -25,9 +25,8 @@ class ScheduleRequest extends FormRequest
     {
         return [
             'message' => 'required',
-            'media' => 'required',
+            'media' => 'nullable',
             'sent_at' => 'required',
-            'status' => 'required',
         ];
     }
 }

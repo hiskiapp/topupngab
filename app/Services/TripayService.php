@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Http;
 
 class TripayService
 {
-    public function http($method, $slug, $data = [])
+    public function http(string $method, string $slug, array $data = [])
     {
         if (config('services.tripay.debug')) {
             $base_uri = 'https://payment.tripay.co.id/api-sandbox/';

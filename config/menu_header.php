@@ -68,7 +68,7 @@ return [
                         'page' => '/broadcast'
                     ],
                     [
-                        'title' => 'Schedullar',
+                        'title' => 'Schedule',
                         'icon' => 'media/svg/icons/Text/Bullet-list.svg',
                         'page' => '/schedules'
                     ],

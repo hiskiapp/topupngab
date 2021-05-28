@@ -19,9 +19,11 @@ Auth::routes(['register' => false, 'verify' => true]);
 
 Route::group(['middleware' => 'auth', 'verified'], function() {
 	Route::group(['prefix' => 'data', 'as' => 'data.'], function() {
+		Route::post('logs', 'DataController@logs')->name('logs');
 		Route::post('customers', 'DataController@customers')->name('customers');
 		Route::post('games', 'DataController@games')->name('games');
 		Route::post('items', 'DataController@items')->name('items');
+		Route::post('broadcasts', 'DataController@broadcasts')->name('broadcasts');
 		Route::post('schedules', 'DataController@schedules')->name('schedules');
 		Route::post('settings', 'DataController@settings')->name('settings');
 		Route::post('transactions', 'DataController@transactions')->name('transactions');

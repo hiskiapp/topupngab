@@ -2,6 +2,9 @@
 
 namespace App\Console\Commands;
 
+use App\Models\Schedule;
+use Carbon\Carbon;
+use Facades\Services\WhatsappService;
 use Illuminate\Console\Command;
 
 class WhatsappSchedule extends Command
@@ -18,7 +21,7 @@ class WhatsappSchedule extends Command
      *
      * @var string
      */
-    protected $description = 'Send broadcast whatsapp in schedule';
+    protected $description = 'Whatsapp schedule broadcast';
 
     /**
      * Create a new command instance.
@@ -37,6 +40,19 @@ class WhatsappSchedule extends Command
      */
     public function handle()
     {
-        return 0;
+        $schedules = Schedule::whereDate('sent_at', '<=', Carbon::now())
+        ->where('status', 0)
+        ->get();
+
+        foreach($schedules as $schedule)
+        {
+            WhatsappService::broadcast($schedule->message, $schedule->media);
+
+            $schedule->update([
+                'status' => 1,
+            ]);
+        }
+
+        return true;
     }
 }

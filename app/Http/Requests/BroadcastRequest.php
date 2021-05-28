@@ -25,8 +25,7 @@ class BroadcastRequest extends FormRequest
     {
         return [
             'message' => 'required',
-            'file' => 'required',
-            'file_name' => 'required'
+            'media' => 'nullable',
         ];
     }
 }

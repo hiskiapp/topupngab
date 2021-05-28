@@ -66,7 +66,7 @@ return [
             'new-tab' => false,
         ],
         [
-            'title' => 'Schedullar',
+            'title' => 'Schedule',
             'root' => true,
             'icon' => 'media/svg/icons/Text/Bullet-list.svg',
             'page' => '/schedules',

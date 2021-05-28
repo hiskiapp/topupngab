@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ScheduleRequest;
 use App\Models\Schedule;
+use Facades\Services\FileService;
+use Carbon\Carbon;
 
 class ScheduleController extends Controller
 {
@@ -35,7 +37,16 @@ class ScheduleController extends Controller
      */
     public function store(ScheduleRequest $request)
     {
-        //
+        Schedule::create([
+            'message' => $request->message,
+            'media' => $request->hasFile('media') ? FileService::upload($request->file('media')) : null,
+            'sent_at' => Carbon::parse($request->sent_at)->toDateTimeString(),
+        ]);
+
+        return redirect()->route('schedules.index')->with([
+            'status' => 'success',
+            'message' => 'Schedule Berhasil Ditambahkan!'
+        ]);
     }
 
     /**
@@ -60,7 +71,17 @@ class ScheduleController extends Controller
      */
     public function update(ScheduleRequest $request, $id)
     {
-        //
+        $schedule = Schedule::findOrFail($id);
+        $schedule->update([
+            'message' => $request->message,
+            'media' => FileService::upload($request->file('media'), $schedule->media),
+            'sent_at' => Carbon::parse($request->sent_at)->toDateTimeString(),
+        ]);
+
+        return back()->with([
+            'status' => 'success',
+            'message' => 'Schedule berhasil diperbarui!'
+        ]);
     }
 
     /**

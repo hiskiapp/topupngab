@@ -51,7 +51,10 @@ License: You must have a valid license purchased only from themeforest(the above
 
         @include('layouts.base._layout')
 
-        <script>var HOST_URL = "{{ url('') }}";</script>
+        <script>
+            var HOST_URL = "{{ url('') }}";
+            var HOST_API = "{{ config('services.whatsapp.url') }}";
+        </script>
 
         {{-- Global Config (global config for global JS scripts) --}}
         <script>

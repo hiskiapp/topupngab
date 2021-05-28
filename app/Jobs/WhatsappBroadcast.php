@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use Facades\Services\WhatsappService;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -13,14 +14,16 @@ class WhatsappBroadcast implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
+    protected $data;
+
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($data)
     {
-        //
+        $this->data = $data;
     }
 
     /**
@@ -30,6 +33,6 @@ class WhatsappBroadcast implements ShouldQueue
      */
     public function handle()
     {
-        //
+        WhatsappService::broadcast($this->data['message'], $this->data['media']);
     }
 }

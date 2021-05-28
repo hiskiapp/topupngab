@@ -99,8 +99,8 @@ Password: 123456
 - [x] Migration
 - [x] Auth
 - [x] Master Data
-- [ ] Bot
-- [ ] Broadcast, Schedullar
+- [x] Bot
+- [x] Broadcast, Schedullar
 - [ ] Transaction
 - [ ] Home & Report
 

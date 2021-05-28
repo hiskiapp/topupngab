@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Setting;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
@@ -15,7 +14,10 @@ class BotController extends Controller
      */
     public function index()
     {
-        return view('bot.index');
+        $status = setting('whatsapp_session');
+        $token = setting('token');
+
+        return view('bot.index', compact('status', 'token'));
     }
 
     public function token()

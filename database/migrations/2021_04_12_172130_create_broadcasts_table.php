@@ -16,8 +16,7 @@ class CreateBroadcastsTable extends Migration
         Schema::create('broadcasts', function (Blueprint $table) {
             $table->id();
             $table->text('message')->nullable();
-            $table->string('file')->nullable();
-            $table->string('file_name')->nullable();
+            $table->string('media')->nullable();
             $table->timestamps();
         });
     }

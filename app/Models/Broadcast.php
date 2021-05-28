@@ -16,7 +16,6 @@ class Broadcast extends Model
      */
     protected $fillable = [
         'message',
-        'file',
-        'file_name'
+        'media',
     ];
 }

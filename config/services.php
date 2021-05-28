@@ -37,4 +37,8 @@ return [
         'debug' => env('TRIPAY_DEBUG')
     ],
 
+    'whatsapp' => [
+        'url' => env('WHATSAPP_API_URL'),
+    ],
+
 ];

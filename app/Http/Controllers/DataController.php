@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Broadcast;
 use App\Models\Customer;
 use App\Models\Game;
 use App\Models\Item;
@@ -32,6 +33,18 @@ class DataController extends Controller
         return DataTables::of($games)
         ->editColumn('updated_at', function ($game) {
             return $game->updated_at ? with(new Carbon($game->updated_at))->format('d F Y H:i') : '';
+        })
+        ->addIndexColumn()
+        ->make();
+    }
+
+    public function broadcasts()
+    {
+        $broadcasts = Broadcast::orderBy('created_at', 'desc')->get();
+
+        return DataTables::of($broadcasts)
+        ->editColumn('created_at', function ($broadcast) {
+            return $broadcast->created_at ? with(new Carbon($broadcast->created_at))->format('d F Y H:i') : '';
         })
         ->addIndexColumn()
         ->make();

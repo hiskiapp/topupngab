@@ -27,20 +27,17 @@ class BroadcastController extends Controller
      */
     public function store(BroadcastRequest $request)
     {
-        $file = $request->hasFile('file') ? FileService::upload($request->file) : null;
-
+        $media = $request->hasFile('media') ? FileService::upload($request->media) : null;
         $data = [
             'message' => $request->message,
-            'file' => $file,
-            'file_name' => $request->file_name,
+            'media' => $media,
         ];
 
         Broadcast::create($data);
-
-        dispatch(new WhatsappBroadcast($data));
+        WhatsappBroadcast::dispatch($data);
 
         return redirect()->route('broadcast.index')->with([
-            'type' => 'success',
+            'status' => 'success',
             'message' => 'Broadcast Sedang Diproses!'
         ]);
     }
