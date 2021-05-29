@@ -87,7 +87,8 @@ var MessagesStat = function () {
         var options = {
             series: [{
                 name: 'Messages',
-                data: JSON.parse(element.getAttribute("data-messages"))
+                // data: JSON.parse(element.getAttribute("data-messages"))
+                data: [],
             }],
             chart: {
                 type: 'area',
@@ -129,7 +130,7 @@ var MessagesStat = function () {
                 colors: [strokeColor]
             },
             xaxis: {
-                categories: ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtus'],
+                categories: ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'],
                 axisBorder: {
                     show: false,
                 },
